@@ -1,0 +1,5 @@
+.vscode
+*.pyc
+build/*
+run/*
+result/*
