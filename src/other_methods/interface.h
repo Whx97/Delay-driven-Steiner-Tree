@@ -4,7 +4,6 @@
 #include "salt/base/eval.h"
 #include "salt/base/tree.h"
 #include "salt/utils/enum.h"
-// #include "myself/self.h"
 #include "delay_tree/DelayTreeBuilder.h"
 // Note: need to set salt::BonnBuilder::unitCap
 

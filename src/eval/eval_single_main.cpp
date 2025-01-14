@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
         printlog("maxNorDelay is", eval.maxNorDelay);
         printlog("avgNorDelay is", eval.avgNorDelay);
 
-        // 输出树到.tree文件
+        // Output tree to .tree file
         tree.Write(method._to_string());
     }
 

@@ -104,7 +104,6 @@ int main(int argc, char **argv) {
         auto eval = tree.first;
         auto eval_salt = tree.second;
 
-        // 输出表头
         COUT_BLUE_START;
         cout << "\t\t" << targetNames[i] << endl;
         COUT_RED_START;

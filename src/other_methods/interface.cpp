@@ -79,7 +79,7 @@ void GetATree(const salt::Net& net, salt::Tree& tree, Method type, double eps, b
         case Method::DelayTree_R2: {
             salt::DelayTreeBuilder DTB(net.pins.size());
             std::string enumStr = type._to_string();
-            char lastDigit = enumStr.back();  // 获取字符串的最后一个字符
+            char lastDigit = enumStr.back();  // Get the last character of the string
             DTB.Run(net, tree, eps + 1, lastDigit - '0');
             break;
         }

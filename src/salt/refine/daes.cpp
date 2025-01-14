@@ -51,7 +51,6 @@ void Refine::DAES_S(Tree& tree, double eps, double rd, bool useRTree) {
         }
     };
 
-    // 预备
     salt::ElmoreDelayEval before_delayEval(rd, tree);
     auto before_sumDelay = before_delayEval.sumNorDelay;
 
@@ -183,7 +182,7 @@ void Refine::DAES_S(Tree& tree, double eps, double rd, bool useRTree) {
                 if (node == neigh) continue;
                 auto steinerPt = GetNearestPoint(node, neigh);
 
-                // pl不能违规
+                // pl can't be violated
                 DTYPE pathLengthDelta =
                     pathLengths[neighParent->id] + Dist(node->loc, neighParent->loc) - pathLengths[node->id];
                 if (pathLengthDelta > slacks[node->id]) continue;
@@ -379,7 +378,6 @@ void Refine::DAES(Tree& tree, double eps, double rd, bool useRTree) {
         }
     };
 
-    // 预备
     salt::ElmoreDelayEval before_delayEval(rd, tree);
     auto before_sumDelay = before_delayEval.sumNorDelay;
 
@@ -476,7 +474,7 @@ void Refine::DAES(Tree& tree, double eps, double rd, bool useRTree) {
         using MoveT = tuple<double,
                             shared_ptr<TreeNode>,
                             shared_ptr<TreeNode>,
-                            int>;  // 最后一个的int，1表示选neigh，2表示选neighParent，3表示选steinerPt
+                            int>;  // The int of the last one, 1 means choose neigh, 2 means choose neighParent, 3 means choose steinerPt
         int which_node = 0;
         vector<MoveT> candidateMoves;  // <wireLengthDelta, node, newParent>
         auto GetNearestPoint = [](const shared_ptr<TreeNode>& target, const shared_ptr<TreeNode>& neigh) {
@@ -514,7 +512,7 @@ void Refine::DAES(Tree& tree, double eps, double rd, bool useRTree) {
                 if (node == neighParent) continue;
                 if (node == neigh) continue;
 
-                // pl不能违规
+                // pl can't be violated.
                 DTYPE pathLengthDelta =
                     pathLengths[neighParent->id] + Dist(node->loc, neighParent->loc) - pathLengths[node->id];
                 if (pathLengthDelta > slacks[node->id]) continue;
@@ -530,7 +528,7 @@ void Refine::DAES(Tree& tree, double eps, double rd, bool useRTree) {
                     TreeNode::SetParent(node, tmp_nodes[i]);
 
                     if (i == 0) {
-                        // pl不能违规
+                        // pl can't be violated.
                         DTYPE pathLengthDelta =
                             pathLengths[tmp_nodes[i]->id] + Dist(node->loc, tmp_nodes[i]->loc) - pathLengths[node->id];
                         if (pathLengthDelta > slacks[node->id]) continue;
@@ -616,7 +614,7 @@ void Refine::DAES(Tree& tree, double eps, double rd, bool useRTree) {
                 TreeNode::ResetParent(node);
                 TreeNode::SetParent(node, neigh);
 
-                // pl不能违规
+                // pl can't be violated.
                 DTYPE pathLengthDelta = pathLengths[neigh->id] + Dist(node->loc, neigh->loc) - pathLengths[node->id];
                 if (pathLengthDelta > slacks[node->id]) continue;
             } else if (which_node == 2) {
@@ -735,11 +733,10 @@ void Refine::DAES_C(Tree& tree, double eps, double rd, bool useRTree) {
         }
     };
 
-    // 预备
     salt::ElmoreDelayEval before_delayEval(rd, tree);
     auto before_sumDelay = before_delayEval.sumNorDelay;
 
-    auto for_one_net_maxLB = before_delayEval._maxLb;  // 用来正则化，不需要重复计算，这里直接保存一份
+    auto for_one_net_maxLB = before_delayEval._maxLb;
 
     int iter_num = 0;
     int max_iter = 2;
@@ -806,7 +803,7 @@ void Refine::DAES_C(Tree& tree, double eps, double rd, bool useRTree) {
         // Init path lengths and subtree slacks
         vector<DTYPE> pathLengths(nodes.size());
         vector<DTYPE> slacks(nodes.size());
-        // 所有slack违例的点的id
+        // The ids of all the points in the slack violation
         vector<int> slack_violation_nodes_id;  //////////////
         auto UpdatePathLengths = [&](const shared_ptr<TreeNode>& node) {
             if (node->pin) {
@@ -839,7 +836,7 @@ void Refine::DAES_C(Tree& tree, double eps, double rd, bool useRTree) {
         using MoveT = tuple<double,
                             shared_ptr<TreeNode>,
                             shared_ptr<TreeNode>,
-                            int>;  // 最后一个的int，1表示选neigh，2表示选neighParent，3表示选steinerPt
+                            int>;  // The int of the last one, 1 means choose neigh, 2 means choose neighParent, 3 means choose steinerPt
         int which_node = 0;
         vector<MoveT> candidateMoves;  // <wireLengthDelta, node, newParent>
         auto GetNearestPoint = [](const shared_ptr<TreeNode>& target, const shared_ptr<TreeNode>& neigh) {
@@ -883,7 +880,7 @@ void Refine::DAES_C(Tree& tree, double eps, double rd, bool useRTree) {
                     TreeNode::SetParent(node, tmp_nodes[i]);
 
                     if (i == 0) {
-                        // pl不能违规
+                        // pl can't be violated.
                         DTYPE pathLengthDelta =
                             pathLengths[tmp_nodes[i]->id] + Dist(node->loc, tmp_nodes[i]->loc) - pathLengths[node->id];
                         if (pathLengthDelta > slacks[node->id]) continue;
@@ -984,7 +981,7 @@ void Refine::DAES_C(Tree& tree, double eps, double rd, bool useRTree) {
                 TreeNode::ResetParent(node);
                 TreeNode::SetParent(node, neigh);
 
-                // pl不能违规
+                // pl can't be violated.
                 DTYPE pathLengthDelta = pathLengths[neigh->id] + Dist(node->loc, neigh->loc) - pathLengths[node->id];
                 if (pathLengthDelta > slacks[node->id]) continue;
             } else if (which_node == 2) {
@@ -1104,7 +1101,6 @@ void Refine::DAES_S_C(Tree& tree, double eps, double rd, bool useRTree) {
         }
     };
 
-    // 预备
     salt::ElmoreDelayEval before_delayEval(rd, tree);
     auto before_sumDelay = before_delayEval.sumNorDelay;
 
@@ -1174,7 +1170,7 @@ void Refine::DAES_S_C(Tree& tree, double eps, double rd, bool useRTree) {
         // Init path lengths and subtree slacks
         vector<DTYPE> pathLengths(nodes.size());
         vector<DTYPE> slacks(nodes.size());
-        // 所有slack违例的点的id
+        // The ids of all the points in the slack violation.
         vector<int> slack_violation_nodes_id;
         auto UpdatePathLengths = [&](const shared_ptr<TreeNode>& node) {
             if (node->pin) {
@@ -1235,7 +1231,7 @@ void Refine::DAES_S_C(Tree& tree, double eps, double rd, bool useRTree) {
 
                 auto steinerPt = GetNearestPoint(node, neigh);
 
-                // pl不能违规
+                // pl can't be violated.
                 DTYPE pathLengthDelta =
                     pathLengths[neighParent->id] + Dist(node->loc, neighParent->loc) - pathLengths[node->id];
                 if (pathLengthDelta > slacks[node->id]) continue;

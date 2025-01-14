@@ -7,13 +7,13 @@
 #include "tree.h"
 namespace salt {
 
-// 用来记录WL在优化PL之后是否发生变化
+// Used to record whether WL changes after optimizing PL or not
 using IsConstWL = bool;
-// PL变化量除以WL的变化量
+// Change in PL divided by change in WL
 using DeltaPL_WL = double;
-// max delay变化量除以WL的变化量
+// The change in max delay divided by the change in WL
 using DeltaMaxDelay_WL = double;
-// avg delay变化量除以WL的变化量
+// avg change in delay divided by change in WL
 using DeltaAvgDelay_WL = double;
 
 class WireLengthEvalBase {
@@ -69,11 +69,11 @@ public:
     double score = 0;
 
     ElmoreDelayEval() {}
-    void Calc(double rd, Tree& tree);                           // 不是包含所有pin
+    void Calc(double rd, Tree& tree);                           // Not all pins
     void Update(double rd, Tree& tree, bool normalize = true);  // tree node id will be updated
     ElmoreDelayEval(double rd, Tree& tree, bool normalize = true) { Update(rd, tree, normalize); }
 
-    double _maxLb = 0.0;  // 对每条net，每次都要重新计算，所以缓存一下，这个值只对一条net是不变的
+    double _maxLb = 0.0;  // For each net, it is recalculated each time, so cache it, and the value is only constant for one net
     ElmoreDelayEval(double rd, Tree& tree, double maxLb) {
         assert(rd > 0);
         assert(unitRes > 0 && unitCap > 0);
@@ -134,7 +134,7 @@ public:
     double bound_WL = 0.0;  // bound_WL = optPL_WL / flute_WL
     double delta_WL = 0.0;  // delta_WL = optPL_WL - flute_WL
     double delta_NorWL = 0.0;
-    double delta_NorWL_reduce = 0.0;  // WL变短的不加入计算
+    double delta_NorWL_reduce = 0.0;  // WL shortened not added to the calculation
 
     long long int deltaPL = 0.0;  // delta max PL
     double deltaNorPL = 0.0;      // Norm. delta max PL
@@ -145,7 +145,7 @@ public:
     vector<double> deltaAvgDelay_vec;
 
     long long int WL_reduce_num = 0;
-    double bound_WL_reduce = 0.0;  // WL变短的不加入计算
+    double bound_WL_reduce = 0.0;  // WL shortened not added to the calculation
 
     double delta_max_delay_same_wl = 0.0;
     double delta_avg_delay_same_wl = 0.0;

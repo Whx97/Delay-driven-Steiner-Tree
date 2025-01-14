@@ -30,7 +30,7 @@ You can draw the results of the tree using `plot/draw.py`. An example result:
 
 ![salt](/toys/DelayTree_toy1.tree.png)
 
-## Benck
+## Bench
 The nets extracted from [ICCAD'15 Contest Problem B](https://doi.org/10.1109/ICCAD.2015.7372672) can be downloaded via [Dropbox](https://www.dropbox.com/sh/gcq1dh84ko9rjpz/AAAVT0pLZG_FMiOi0ORiKddva?dl=0). 
 You can randomly assign slacks to pins by running the executable file `run/benchmark_constuct`.
 

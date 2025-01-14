@@ -99,7 +99,7 @@ void writeNet(ostream& os, const salt::Net& net) {
     for (const auto& pin : pins) {
         os << pin->id << " " << pin->loc.x << " " << pin->loc.y;
         os << " " << pin->cap;
-        // 随机分配一个slack，值域为[-4,4]
+        // Randomly assign a slack value
         int slack = rand() % 9 - 4;
         if (slack >= 0) {
             slack = 0;
@@ -121,9 +121,8 @@ bool WriteNets(const string& netFileName) {
     // 1. Write the header
     netFile << "# Network Configuration File" << endl;
     netFile << "# Routing benchmark generated from ICCAD 2015 benchmark superblue4" << endl;
-    // 获取当前时间点
+
     auto now = std::chrono::system_clock::now();
-    // 转换为时间结构
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
     std::tm now_tm = *std::localtime(&now_time_t);
 
@@ -159,7 +158,7 @@ int main() {
     printlog("================================================================================");
     printlog("                               Benchmark Start ...                              ");
     printlog("================================================================================");
-    // 产生具有不同slack的nets
+    // Generate nets with different slacks
     benchmark();
 
     printlog("================================================================================");

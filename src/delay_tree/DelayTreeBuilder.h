@@ -42,7 +42,7 @@ private:
 
     vector<pair<shared_ptr<TreeNode>, int>> find_all_stretch_node(shared_ptr<salt::TreeNode> source, Tree& tree);
 
-    // 根据slack确定哪些点需要fix
+    // Determine which points need to be fixed based on slack
     vector<pair<shared_ptr<TreeNode>, double>> find_node_be_fix_PL(shared_ptr<salt::TreeNode> source, Tree& tree);
 
     bool PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node, double eps, DTYPE best_WL);
@@ -64,9 +64,7 @@ private:
     DTYPE _best_WL;
     DTYPE _current_WL;
     shared_ptr<TreeNode> _source;
-    // 在树上，到source的长度
     vector<int> _length_to_source;
-    // 到source的曼哈顿距离
     vector<int> _length_Mah_source;
 
     double _eps;

@@ -78,7 +78,6 @@ for filename in args.input_filenames:
                                 plt.text(node.x+0.66, node.y+0.66, node.id, fontsize=40)
                     else:
                         plt.text(node.x+0.66, node.y+0.66, node.id, fontsize=40)
-                    # plt.text字体大小
                     # plt.text(node.x, node.y, node.id, fontsize=6)
                 # anno text
                 if args.anno_text == 'no':
@@ -96,7 +95,7 @@ for filename in args.input_filenames:
             plt.axis('square')
             plt.axis('off')
             plt.savefig('{}.png'.format(filename), bbox_inches='tight')
-            # 把文件转移到另一个文件夹
+            # Moving files to another folder
             import shutil
             move_filename = filename.split('/')[-1]
             shutil.move('{}.png'.format(filename), './run/{}.png'.format(move_filename))

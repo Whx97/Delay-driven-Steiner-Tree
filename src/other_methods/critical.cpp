@@ -37,7 +37,7 @@ void CriticalBuilder::Run(const Net& net, Tree& tree) {
         }
     }
 
-    // unvio_pin需要加上source
+    // unvio_pin need add source node
     unvio_pin.push_back(net.source());
     int unvio_pin_num = unvio_pin.size();
     if (unvio_pin_num > 1) {

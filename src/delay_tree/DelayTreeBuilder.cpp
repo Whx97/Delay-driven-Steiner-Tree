@@ -318,26 +318,26 @@ void DelayTreeBuilder::Run(const Net& net, Tree& tree, double eps, int refineLev
 bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node, double eps, DTYPE current_WL) {
     bool improve = false;
 
-    // 记录没优化前的长度信息
+    // Record length information before optimization
     vector<int> length_to_source;
     vector<int> length_Mah_source;
     length_to_source = _length_to_source;
     length_Mah_source = _length_Mah_source;
 
     int best_PL = INT_MAX;
-    auto parent = node->parent;  // 父节点
+    auto parent = node->parent;  // parent node
     if (parent) {
         std::shared_ptr<salt::TreeNode> next_node = nullptr;
 
         next_node = find_ancestor_closest_source(node, tree);
         // next_node = find_father_closest_source_across_path(node, tree);
         assert(next_node);
-        // 记录优化前的PL
+        // Record the PL before optimization
         int pre_PL = std::accumulate(_length_to_source.begin(), _length_to_source.begin() + _pin_num, 0);
 
         shared_ptr<salt::TreeNode> best_remove_edge_1 = nullptr;
         shared_ptr<salt::TreeNode> best_remove_edge_2 = nullptr;
-        DTYPE changed_best_WL = INT_MAX;  // 边删除过程中最好的WL
+        DTYPE changed_best_WL = INT_MAX;  // Best WL in the edge deletion process
 
         set<int> unviolate_node_before;
         for (int i = 0; i < _pin_num; i++) {
@@ -347,7 +347,7 @@ bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node
         }
 
         auto path = find_path(node, next_node);
-        for (int edge_id = 0; edge_id < static_cast<int>(path.size() - 1); edge_id++) {  // 找到需要移除哪条边
+        for (int edge_id = 0; edge_id < static_cast<int>(path.size() - 1); edge_id++) {  // Find which edges need to be removed
             auto node_1 = path[edge_id];
             auto node_2 = path[edge_id + 1];
             if (!node_2) {
@@ -358,7 +358,7 @@ bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node
             DTYPE remove_edge_length = utils::Dist(node_1->loc, node_2->loc);
             DTYPE changed_WL = current_WL + (add_edge_length - remove_edge_length);
 
-            // 更新每个点到source的长度,只需要更新部分
+            // update the length of each point to the source, only part of it needs to be updated.
             _length_to_source[node->id] = _length_to_source[next_node->id] + add_edge_length;
 
             auto updat_path = find_path(node, node_2);
@@ -367,7 +367,7 @@ bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node
                 auto n1 = path[i];
                 auto n2 = path[i - 1];
                 _length_to_source[n1->id] = _length_to_source[n2->id] + utils::Dist(n1->loc, n2->loc);
-                // n1的子节点也要更新
+                // the children of n1 are also updated
                 auto childs = n1->children;
                 for (auto child : childs) {
                     if (child->id == n2->id) {
@@ -384,7 +384,7 @@ bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node
                     violate_node_after.insert(i);
                 }
             }
-            // violate_node_after中不能包含unviolate_node_before中的点
+            // violate_node_after can't contain points in unviolate_node_before
             set<int> violate_node;
             set_intersection(violate_node_after.begin(),
                              violate_node_after.end(),
@@ -406,7 +406,7 @@ bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node
                 changed_best_WL = changed_WL;
             }
             _length_to_source = length_to_source;
-        }  // 找到需要移除哪条边
+        }  // Find which edges need to be removed
 
         if (best_remove_edge_1 && best_remove_edge_2) {
             if (best_remove_edge_1->parent == best_remove_edge_2) {
@@ -422,7 +422,7 @@ bool DelayTreeBuilder::PathLengthOpt(Tree& tree, shared_ptr<salt::TreeNode> node
 }
 
 vector<shared_ptr<TreeNode>> DelayTreeBuilder::find_path(shared_ptr<TreeNode> s_node, shared_ptr<TreeNode> e_node) {
-    // 找到路径上的所有点
+    // find all points on the path
     std::vector<shared_ptr<TreeNode>> path;
     auto current_node = s_node;
 
@@ -534,7 +534,7 @@ shared_ptr<salt::TreeNode> DelayTreeBuilder::find_ancestor_closest_source(shared
     shared_ptr<salt::TreeNode> next_node5 = nullptr;
     int extra_wl = INT_MAX;
     tree.PostOrderCopy([&](shared_ptr<TreeNode> nd) {
-        // 两个点不能有连接
+        // two points can't be connected
         if (nd->id != node->id && node->parent != nd && nd->parent != node) {
             auto dist = utils::Dist(nd->loc, node->loc);
             auto pl = dist + _length_to_source[nd->id];
@@ -558,7 +558,7 @@ shared_ptr<salt::TreeNode> DelayTreeBuilder::find_father_closest_source_across_p
     auto parent = node->parent;
     while (parent != nullptr) {
         auto nd = parent;
-        // 两个点不能有连接
+        // two points can't be connected
         if (nd->id != node->id) {
             auto dist = utils::Dist(nd->loc, node->loc);
             auto pl = dist + _length_to_source[nd->id];

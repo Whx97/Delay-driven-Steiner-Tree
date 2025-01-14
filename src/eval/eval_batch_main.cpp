@@ -109,8 +109,8 @@ void EvalAllMethods(const string& evalFileNameSuffix) {
         vector<vector<salt::CompleteStat>> allStats;  // <eps, pin_class> -> stat
         allStats.push_back(EvalAllNets(method, 0));
         if (method != +Method::FLUTE && method != +Method::RSA && method != +Method::MST) {
-            // double epsMax = 5.4;  // 13个点
-            double epsMax = 0.08;  // 3个点
+            // double epsMax = 5.4;  // 13 points
+            double epsMax = 0.08;  // 3 points
             for (double eps = 0.05; eps <= epsMax; eps *= 1.5) {
                 allStats.push_back(EvalAllNets(method, eps));
             }
