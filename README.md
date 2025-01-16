@@ -38,4 +38,19 @@ You can randomly assign slacks to pins by running the executable file `run/bench
 ## Note
 
 * Make sure you have files `POWV9.dat` and `POST9.dat` in the executable's directory, if not copy them from path `src/salt/base/flute`.
-* The source of a net should be guaranteed to have an index of 0. 
+* The source of a net should be guaranteed to have an index of 0.
+
+## Citation
+
+If you use this code in your research, please cite the following paper:
+
+```bibtex
+@article{wu2024delay,
+  author={Wu, Hongxi and Li, Xingquan and Chen, Liang and Yu, Bei and Zhu, Wenxing},
+  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, 
+  title={Delay-Driven Rectilinear Steiner Tree Construction}, 
+  year={2024},
+  note = {Early Access},
+  doi={10.1109/TCAD.2024.3501932}
+}
+```
