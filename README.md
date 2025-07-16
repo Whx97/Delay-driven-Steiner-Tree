@@ -45,12 +45,14 @@ You can randomly assign slacks to pins by running the executable file `run/bench
 If you use this code in your research, please cite the following paper:
 
 ```bibtex
-@article{wu2024delay,
+@article{wu2025delay,
+  title={Delay-Driven Rectilinear Steiner Tree Construction},
   author={Wu, Hongxi and Li, Xingquan and Chen, Liang and Yu, Bei and Zhu, Wenxing},
-  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, 
-  title={Delay-Driven Rectilinear Steiner Tree Construction}, 
-  year={2024},
-  note = {Early Access},
-  doi={10.1109/TCAD.2024.3501932}
+  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},
+  volume={44},
+  number={5},
+  pages={1928--1941},
+  year={2025},
+  publisher={IEEE}
 }
 ```
